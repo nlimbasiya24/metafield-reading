@@ -12,6 +12,7 @@ import productCreator from "./helpers/product-creator.js";
 import redirectToAuth from "./helpers/redirect-to-auth.js";
 import { BillingInterval } from "./helpers/ensure-billing.js";
 import { AppInstallations } from "./app_installations.js";
+import { metafieldRoute } from "./v1/route/metafieldRoute.js";
 
 const USE_ONLINE_TOKENS = false;
 
@@ -170,6 +171,8 @@ export async function createServer(
     app.use(compression());
     app.use(serveStatic(PROD_INDEX_PATH, { index: false }));
   }
+
+   app.use("/api/v1/metafield-set", metafieldRoute);
 
   app.use("/*", async (req, res, next) => {
     if (typeof req.query.shop !== "string") {
